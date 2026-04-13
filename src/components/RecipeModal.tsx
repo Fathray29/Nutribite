@@ -45,21 +45,22 @@ export function RecipeModal({ recipe, onClose, isFavorite, onToggleFavorite }: R
         />
         
         <motion.div 
-          initial={{ opacity: 0, y: 20, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 20, scale: 0.95 }}
-          className="relative w-full max-w-3xl bg-white rounded-[32px] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+          initial={{ opacity: 0, y: "100%" }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: "100%" }}
+          transition={{ type: "spring", damping: 25, stiffness: 200 }}
+          className="relative w-full max-w-3xl bg-white dark:bg-stone-900 h-[100dvh] sm:h-auto sm:max-h-[90vh] rounded-none sm:rounded-[32px] shadow-2xl overflow-hidden flex flex-col"
         >
           <div className="absolute top-4 right-4 z-10 flex gap-2">
             <button 
               onClick={(e) => onToggleFavorite(recipe, e)}
-              className="bg-white/80 backdrop-blur-md text-stone-800 p-2 rounded-full hover:bg-white transition-colors shadow-sm"
+              className="bg-white/80 dark:bg-stone-800/80 backdrop-blur-md text-stone-800 dark:text-stone-200 p-2 rounded-full hover:bg-white dark:hover:bg-stone-700 transition-colors shadow-sm"
             >
-              <Heart size={20} className={isFavorite ? "fill-red-500 text-red-500" : "text-stone-800"} />
+              <Heart size={20} className={isFavorite ? "fill-red-500 text-red-500" : "text-stone-800 dark:text-stone-200"} />
             </button>
             <button 
               onClick={onClose}
-              className="bg-white/80 backdrop-blur-md text-stone-800 p-2 rounded-full hover:bg-white transition-colors shadow-sm"
+              className="bg-white/80 dark:bg-stone-800/80 backdrop-blur-md text-stone-800 dark:text-stone-200 p-2 rounded-full hover:bg-white dark:hover:bg-stone-700 transition-colors shadow-sm"
             >
               <X size={20} />
             </button>
@@ -103,7 +104,7 @@ export function RecipeModal({ recipe, onClose, isFavorite, onToggleFavorite }: R
             </div>
 
             <div className="p-6 sm:p-8">
-              <p className="text-stone-600 text-lg mb-8 leading-relaxed">
+              <p className="text-stone-600 dark:text-stone-300 text-lg mb-8 leading-relaxed">
                 {recipe.description}
               </p>
 
@@ -111,22 +112,22 @@ export function RecipeModal({ recipe, onClose, isFavorite, onToggleFavorite }: R
                 {/* Left Column: Ingredients & Servings */}
                 <div>
                   <div className="flex items-center justify-between mb-6">
-                    <h3 className="font-serif text-2xl font-medium text-stone-900">Ingredients</h3>
+                    <h3 className="font-serif text-2xl font-medium text-stone-900 dark:text-stone-100">Ingredients</h3>
                     
-                    <div className="flex items-center bg-stone-100 rounded-full p-1">
+                    <div className="flex items-center bg-stone-100 dark:bg-stone-800 rounded-full p-1">
                       <button 
                         onClick={() => setServings(Math.max(1, servings - 1))}
-                        className="w-8 h-8 flex items-center justify-center rounded-full bg-white text-stone-600 shadow-sm hover:text-stone-900 disabled:opacity-50"
+                        className="w-8 h-8 flex items-center justify-center rounded-full bg-white dark:bg-stone-700 text-stone-600 dark:text-stone-300 shadow-sm hover:text-stone-900 dark:hover:text-stone-100 disabled:opacity-50"
                         disabled={servings <= 1}
                       >
                         <Minus size={16} />
                       </button>
-                      <span className="w-12 text-center font-medium text-stone-900">
+                      <span className="w-12 text-center font-medium text-stone-900 dark:text-stone-100">
                         {servings}
                       </span>
                       <button 
                         onClick={() => setServings(servings + 1)}
-                        className="w-8 h-8 flex items-center justify-center rounded-full bg-white text-stone-600 shadow-sm hover:text-stone-900"
+                        className="w-8 h-8 flex items-center justify-center rounded-full bg-white dark:bg-stone-700 text-stone-600 dark:text-stone-300 shadow-sm hover:text-stone-900 dark:hover:text-stone-100"
                       >
                         <Plus size={16} />
                       </button>
@@ -135,18 +136,18 @@ export function RecipeModal({ recipe, onClose, isFavorite, onToggleFavorite }: R
 
                   <ul className="space-y-4">
                     {recipe.ingredients.map((ing, idx) => (
-                      <li key={idx} className="flex items-start justify-between p-3 rounded-2xl hover:bg-stone-50 transition-colors">
+                      <li key={idx} className="flex items-start justify-between p-3 rounded-2xl hover:bg-stone-50 dark:hover:bg-stone-800/50 transition-colors">
                         <div>
-                          <span className="font-medium text-stone-900 block">{ing.name}</span>
-                          <span className="text-sm text-stone-500">
+                          <span className="font-medium text-stone-900 dark:text-stone-100 block">{ing.name}</span>
+                          <span className="text-sm text-stone-500 dark:text-stone-400">
                             {+(ing.amount * scale).toFixed(1)} {ing.unit}
                           </span>
                         </div>
                         <div className="text-right">
-                          <span className="text-sm font-medium text-orange-600 block">
+                          <span className="text-sm font-medium text-orange-600 dark:text-orange-400 block">
                             {Math.round(ing.calories * scale)} kcal
                           </span>
-                          <span className="text-xs text-stone-400">
+                          <span className="text-xs text-stone-400 dark:text-stone-500">
                             P: {+(ing.protein * scale).toFixed(1)}g · F: {+(ing.fat * scale).toFixed(1)}g
                           </span>
                         </div>
@@ -157,42 +158,42 @@ export function RecipeModal({ recipe, onClose, isFavorite, onToggleFavorite }: R
 
                 {/* Right Column: Nutrition & Instructions */}
                 <div>
-                  <div className="bg-stone-50 rounded-3xl p-6 mb-8">
-                    <h3 className="font-serif text-xl font-medium text-stone-900 mb-4">Nutrition per serving</h3>
+                  <div className="bg-stone-50 dark:bg-stone-800/30 rounded-3xl p-6 mb-8">
+                    <h3 className="font-serif text-xl font-medium text-stone-900 dark:text-stone-100 mb-4">Nutrition per serving</h3>
                     <div className="grid grid-cols-2 gap-4">
-                      <div className="bg-white p-4 rounded-2xl shadow-sm border border-stone-100">
+                      <div className="bg-white dark:bg-stone-800 p-4 rounded-2xl shadow-sm border border-stone-100 dark:border-stone-700">
                         <div className="flex items-center gap-2 text-orange-500 mb-1">
                           <Flame size={18} />
                           <span className="text-sm font-medium">Calories</span>
                         </div>
-                        <span className="text-2xl font-medium text-stone-900">
+                        <span className="text-2xl font-medium text-stone-900 dark:text-stone-100">
                           {Math.round(totalNutrition.calories / servings)}
                         </span>
                       </div>
-                      <div className="bg-white p-4 rounded-2xl shadow-sm border border-stone-100">
+                      <div className="bg-white dark:bg-stone-800 p-4 rounded-2xl shadow-sm border border-stone-100 dark:border-stone-700">
                         <div className="flex items-center gap-2 text-blue-500 mb-1">
                           <Beef size={18} />
                           <span className="text-sm font-medium">Protein</span>
                         </div>
-                        <span className="text-2xl font-medium text-stone-900">
+                        <span className="text-2xl font-medium text-stone-900 dark:text-stone-100">
                           {Math.round(totalNutrition.protein / servings)}g
                         </span>
                       </div>
-                      <div className="bg-white p-4 rounded-2xl shadow-sm border border-stone-100">
+                      <div className="bg-white dark:bg-stone-800 p-4 rounded-2xl shadow-sm border border-stone-100 dark:border-stone-700">
                         <div className="flex items-center gap-2 text-yellow-500 mb-1">
                           <Droplet size={18} />
                           <span className="text-sm font-medium">Fat</span>
                         </div>
-                        <span className="text-2xl font-medium text-stone-900">
+                        <span className="text-2xl font-medium text-stone-900 dark:text-stone-100">
                           {Math.round(totalNutrition.fat / servings)}g
                         </span>
                       </div>
-                      <div className="bg-white p-4 rounded-2xl shadow-sm border border-stone-100">
+                      <div className="bg-white dark:bg-stone-800 p-4 rounded-2xl shadow-sm border border-stone-100 dark:border-stone-700">
                         <div className="flex items-center gap-2 text-green-500 mb-1">
                           <div className="w-4 h-4 rounded-full border-2 border-current" />
                           <span className="text-sm font-medium">Carbs</span>
                         </div>
-                        <span className="text-2xl font-medium text-stone-900">
+                        <span className="text-2xl font-medium text-stone-900 dark:text-stone-100">
                           {Math.round(totalNutrition.carbs / servings)}g
                         </span>
                       </div>
@@ -200,14 +201,14 @@ export function RecipeModal({ recipe, onClose, isFavorite, onToggleFavorite }: R
                   </div>
 
                   <div>
-                    <h3 className="font-serif text-2xl font-medium text-stone-900 mb-6">Instructions</h3>
+                    <h3 className="font-serif text-2xl font-medium text-stone-900 dark:text-stone-100 mb-6">Instructions</h3>
                     <ol className="space-y-6">
                       {recipe.instructions.map((step, idx) => (
                         <li key={idx} className="flex gap-4">
-                          <span className="flex-shrink-0 w-8 h-8 rounded-full bg-stone-900 text-white flex items-center justify-center font-medium text-sm">
+                          <span className="flex-shrink-0 w-8 h-8 rounded-full bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 flex items-center justify-center font-medium text-sm">
                             {idx + 1}
                           </span>
-                          <p className="text-stone-700 leading-relaxed pt-1">
+                          <p className="text-stone-700 dark:text-stone-300 leading-relaxed pt-1">
                             {step}
                           </p>
                         </li>
