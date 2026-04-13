@@ -1,0 +1,5 @@
+{
+  "name": "NutriBite Recipe Finder",
+  "description": "A lightweight food recipe search application with detailed nutritional information, filtering, and automatic serving adjustments.",
+  "requestFramePermissions": []
+}
